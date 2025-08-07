@@ -1,0 +1,209 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model address {
+  address_id   String         @id @db.VarChar(255)
+  address      String?        @db.VarChar(255)
+  subdistrict  String?        @db.VarChar(255)
+  ward         String?        @db.VarChar(255)
+  city         String?        @db.VarChar(255)
+  latitude     Decimal?       @db.Decimal(9, 6)
+  longitude    Decimal?       @db.Decimal(9, 6)
+  user_address user_address[]
+}
+
+model cars {
+  license_plate  String        @id @db.VarChar(100)
+  car_name       String?       @db.VarChar(255)
+  color          String?       @db.VarChar(255)
+  car_status     String?       @db.VarChar(255)
+  travel_type_id String?       @db.VarChar(255)
+  created_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime?     @default(now()) @db.Timestamptz(6)
+  travel_type    travel_type?  @relation(fields: [travel_type_id], references: [travel_type_id], onDelete: NoAction, onUpdate: NoAction)
+  departure      departure[]
+  seat_layout    seat_layout[]
+}
+
+model departure {
+  departure_id     String        @id @db.VarChar(255)
+  schedule_id      String?       @db.VarChar(255)
+  license_plate    String?       @db.VarChar(100)
+  driver_id        String?       @db.VarChar(255)
+  departure_date   DateTime?     @db.Date
+  total_passengers Int?
+  seats_available  Int?
+  departure_status String?       @db.VarChar(100)
+  created_at       DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?     @default(now()) @db.Timestamptz(6)
+  drivers          drivers?      @relation(fields: [driver_id], references: [driver_id], onDelete: NoAction, onUpdate: NoAction)
+  cars             cars?         @relation(fields: [license_plate], references: [license_plate], onDelete: NoAction, onUpdate: NoAction)
+  schedule         schedule?     @relation(fields: [schedule_id], references: [schedule_id], onDelete: NoAction, onUpdate: NoAction)
+  seat_layout      seat_layout[]
+  ticket           ticket[]
+}
+
+model discount {
+  discount_id    String    @id @db.VarChar(255)
+  discount_name  String?   @db.VarChar(255)
+  discount_price Decimal?  @db.Decimal(10, 2)
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  ticket         ticket[]
+}
+
+model drivers {
+  driver_id       String      @id @db.VarChar(255)
+  fullname        String?     @db.VarChar(255)
+  phone_number    String?     @db.VarChar(25)
+  photo           String?
+  average_ratings Decimal?    @db.Decimal(10, 2)
+  total_reviews   Int?
+  driver_status   String?     @db.VarChar(100)
+  created_at      DateTime?   @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime?   @default(now()) @db.Timestamptz(6)
+  departure       departure[]
+  reviews         reviews[]
+}
+
+model price_rise {
+  price_rise_id         String                  @id @db.VarChar(255)
+  price_name            String?                 @db.VarChar(255)
+  price_rise            Decimal?                @db.Decimal(10, 2)
+  created_at            DateTime?               @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime?               @default(now()) @db.Timestamptz(6)
+  start_date            DateTime?               @db.Date
+  end_date              DateTime?               @db.Date
+  price_travel_addition price_travel_addition[]
+}
+
+model reviews {
+  review_id      BigInt    @id @default(autoincrement())
+  rating         Int?
+  review_content String?
+  driver_id      String?   @db.VarChar(255)
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  drivers        drivers?  @relation(fields: [driver_id], references: [driver_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model schedule {
+  schedule_id  String         @id @db.VarChar(255)
+  hour_at      DateTime?      @db.Time(6)
+  daytime      String?        @db.VarChar(50)
+  created_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  departure    departure[]
+  transactions transactions[]
+}
+
+model seat_layout {
+  seat_id       String     @id @db.VarChar(255)
+  departure_id  String?    @db.VarChar(255)
+  license_plate String?    @db.VarChar(100)
+  seat_code     String?    @db.VarChar(25)
+  description   String?
+  is_booked     Boolean?   @default(false)
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  departure     departure? @relation(fields: [departure_id], references: [departure_id], onDelete: NoAction, onUpdate: NoAction)
+  cars          cars?      @relation(fields: [license_plate], references: [license_plate], onDelete: NoAction, onUpdate: NoAction)
+  ticket        ticket[]
+}
+
+model ticket {
+  transaction_id         String       @db.VarChar(255)
+  departure_id           String       @db.VarChar(255)
+  ticket_sequence        String       @db.VarChar(5)
+  passenger_name         String?      @db.VarChar(255)
+  passenger_status       String?      @db.VarChar(50)
+  student_identity_proof String?
+  payment                Decimal?     @db.Decimal(10, 2)
+  discount_id            String?      @db.VarChar(255)
+  final_payment          Decimal?     @db.Decimal(10, 2)
+  phone_number           String?      @db.VarChar(25)
+  seat_id                String?      @db.VarChar(255)
+  created_at             DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at             DateTime?    @default(now()) @db.Timestamptz(6)
+  departure              departure    @relation(fields: [departure_id], references: [departure_id], onDelete: NoAction, onUpdate: NoAction)
+  discount               discount?    @relation(fields: [discount_id], references: [discount_id], onDelete: NoAction, onUpdate: NoAction)
+  seat_layout            seat_layout? @relation(fields: [seat_id], references: [seat_id], onDelete: NoAction, onUpdate: NoAction)
+  transactions           transactions @relation(fields: [transaction_id], references: [transaction_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([transaction_id, departure_id, ticket_sequence])
+}
+
+model transactions {
+  transaction_id   String       @id @db.VarChar(255)
+  user_id          String?      @db.VarChar(255)
+  travel_type_id   String?      @db.VarChar(255)
+  booking_date     DateTime?    @db.Date
+  depart_date      DateTime?    @db.Date
+  schedule_id      String?      @db.VarChar(255)
+  total_passengers Int?
+  total_payment    Decimal?     @db.Decimal(10, 2)
+  payment_date     DateTime?    @db.Timestamptz(6)
+  payment_method   String?      @db.VarChar(100)
+  payment_status   String?      @db.VarChar(50)
+  reference_number String?      @db.VarChar(255)
+  cancelled_at     DateTime?    @db.Timestamptz(6)
+  cancelled_reason String?
+  created_at       DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?    @default(now()) @db.Timestamptz(6)
+  ticket           ticket[]
+  schedule         schedule?    @relation(fields: [schedule_id], references: [schedule_id], onDelete: NoAction, onUpdate: NoAction)
+  travel_type      travel_type? @relation(fields: [travel_type_id], references: [travel_type_id], onDelete: NoAction, onUpdate: NoAction)
+  users            users?       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model travel_type {
+  travel_type_id        String                  @id @db.VarChar(255)
+  travel_type           String?                 @db.VarChar(100)
+  normal_price          Decimal?                @db.Decimal(10, 2)
+  current_price         Decimal?                @db.Decimal(10, 2)
+  max_passengers        Int?
+  total_cars            Int?
+  description           String?
+  created_at            DateTime?               @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime?               @default(now()) @db.Timestamptz(6)
+  cars                  cars[]
+  price_travel_addition price_travel_addition[]
+  transactions          transactions[]
+}
+
+model user_address {
+  user_id    String   @db.VarChar(255)
+  address_id String   @db.VarChar(255)
+  is_default Boolean?
+  address    address  @relation(fields: [address_id], references: [address_id], onDelete: NoAction, onUpdate: NoAction)
+  users      users    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, address_id])
+}
+
+model users {
+  user_id      String         @id @db.VarChar(255)
+  fullname     String?        @db.VarChar(255)
+  phone_number String?        @db.VarChar(25)
+  gender       String?        @db.VarChar(50)
+  role         String?        @db.VarChar(50)
+  created_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  transactions transactions[]
+  user_address user_address[]
+}
+
+model price_travel_addition {
+  price_rise_id  String      @db.VarChar(255)
+  travel_type_id String      @db.VarChar(255)
+  price_rise     price_rise  @relation(fields: [price_rise_id], references: [price_rise_id], onDelete: NoAction, onUpdate: NoAction)
+  travel_type    travel_type @relation(fields: [travel_type_id], references: [travel_type_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([price_rise_id, travel_type_id])
+}
