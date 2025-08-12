@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 15px;
+  min-width: 120px;
+  transition: all 0.2s ease;
+  font-family: 'Poppins';
+}
+
+.select {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  z-index: 1;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* Placeholder styling */
+.select.placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.solid .select.placeholder {
+  color: grey;
+}
+
+/* VARIANT STYLES */
+.outline {
+  border: 1px solid black;
+  background-color: none;
+}
+
+.outline:hover:not(.disabled) {
+  border: 1px solid #DD8848;
+}
+
+.solid {
+  background-color: white;
+  color: #DD8848;
+  border: 1.5px solid transparent;
+}
+
+.solid .select {
+  color: white;
+}
+
+/* SIZE VARIANTS */
+.sm {
+  min-height: 30px;
+}
+
+.sm .select {
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Padding adjustments for icons in small size */
+.sm .select.hasIconLeft {
+  padding-left: 28px;
+}
+
+.sm .select.hasIconRight {
+  padding-right: 28px;
+}
+
+.sm .select.hasIconLeft.hasIconRight {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.md {
+  min-height: 35px;
+}
+
+.md .select {
+  padding: 10px;
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+/* Padding adjustments for icons in medium size */
+.md .select.hasIconLeft {
+  padding-left: 36px;
+}
+
+.md .select.hasIconRight {
+  padding-right: 36px;
+}
+
+.md .select.hasIconLeft.hasIconRight {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.lg {
+  min-height: 48px;
+}
+
+.lg .select {
+  padding: 8px 12px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Padding adjustments for icons in large size */
+.lg .select.hasIconLeft {
+  padding-left: 44px;
+}
+
+.lg .select.hasIconRight {
+  padding-right: 44px;
+}
+
+.lg .select.hasIconLeft.hasIconRight {
+  padding-left: 44px;
+  padding-right: 44px;
+}
+
+/* ICON POSITIONING */
+.iconLeft {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.iconRight {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+/* Icon positioning for different sizes */
+.sm .iconLeft {
+  left: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.sm .iconRight {
+  right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.md .iconLeft {
+  left: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.md .iconRight {
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.lg .iconLeft {
+  left: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+.lg .iconRight {
+  right: 12px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Icon colors for solid variant */
+.solid .iconLeft,
+.solid .iconRight {
+  color: #d1d5db;
+}
+
+/* Focus states for icons */
+.wrapper:focus-within .iconLeft,
+.wrapper:focus-within .iconRight {
+  color: black;
+}
+
+.solid.wrapper:focus-within .iconLeft,
+.solid.wrapper:focus-within .iconRight {
+  color: white;
+}
+
+/* DROPDOWN MENU STYLES */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-top: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  color: black;
+}
+
+.solid .dropdownMenu {
+  background: white;
+  border-color: white;
+}
+
+.option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: inherit;
+}
+
+.sm .option {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.md .option {
+  padding: 8px 13px;
+  font-size: 9pt;
+}
+
+.lg .option {
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+.option:hover {
+  background-color: #DA7629;
+  color: white;
+}
+
+.option.selected {
+  background-color: #f3f4f6;
+  font-weight: 500;
+}
+
+.solid .option.selected {
+  background-color: #DD8848;
+  color: white;
+}
+
+.solid .option:hover {
+  background-color: #DD8848;
+  color: white;
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.disabled .select {
+  cursor: not-allowed;
+}
+
+.disabled .iconLeft,
+.disabled .iconRight {
+  opacity: 0.5;
+}

@@ -1,0 +1,66 @@
+.align{
+    display:flex;
+    font-family: var(--poppins);
+    align-items: center;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20pt;
+    margin-top: 15pt;
+}
+
+.align h5{
+    font-weight: 700;
+    color: #DD8848;
+    margin-left: 3pt;
+    font-size: 13pt;
+}
+
+.align h5 span{
+    color: black;
+}
+
+.href{
+    display: flex;
+    font-family: var(--poppins);
+    font-size: 10pt;
+    font-weight: 500;
+    color: black;
+    margin-top: 13pt;
+    margin-bottom: 13pt;
+    padding: 7pt 10pt;
+    width: 100%;
+    border-radius: 10pt;
+}
+
+.href:hover, .active{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.href p{
+    margin-left: 10pt;
+}
+
+.linkwrap{
+    text-decoration: none;
+}
+
+.profil{
+    font-family: var(--poppins);
+    color: black;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid black;
+    padding: 5pt 10pt;
+    border-radius: 15pt;
+}
+
+.profil h5{
+    margin-left: 5pt;
+    font-weight: 600;
+}

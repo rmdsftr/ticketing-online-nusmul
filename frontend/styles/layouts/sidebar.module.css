@@ -1,0 +1,19 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    flex-shrink: 0;
+    width: 240px; 
+    flex-shrink: 0;
+    background-color: white;
+    padding: 20pt 15pt;
+    height: 100vh;
+}
+
+.admin{
+    margin-bottom: 0;
+    margin-top: auto;
+}

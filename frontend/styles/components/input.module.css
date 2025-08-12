@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--poppins);
+}
+
+.label {
+  font-size: 9pt;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Variants */
+.inputContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  transition: all 0.2s ease;
+  padding: 7pt 10pt;
+}
+
+.outline {
+  border: 1px solid #232323;
+  background-color: none;
+}
+
+.solid {
+  background-color: #f3f4f6;
+  border: none;
+}
+
+.ghost {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+}
+
+/* Colors */
+.primary:focus-within {
+  border-color: #DA7629;
+}
+
+.danger:focus-within {
+  border-color: #dc2626;
+}
+
+.gray:focus-within {
+  border-color: #9ca3af;
+}
+
+/* Input */
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 9pt;
+  color: #111;
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins';
+}
+
+.input::placeholder {
+  color: rgba(0,0,0,0.5);
+  font-family: var(--poppins);
+  font-size: 9pt;
+}
+
+/* Icons */
+.iconLeft {
+  margin-right: 8px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.iconRight {
+    margin-right: 8px;
+    margin-left: 8px;
+    margin-bottom: -4px;
+}
+
+/* Error */
+.error {
+  border-color: #dc2626 !important;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.input::-webkit-search-decoration,
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-results-button,
+.input::-webkit-search-results-decoration {
+  display: none;
+}

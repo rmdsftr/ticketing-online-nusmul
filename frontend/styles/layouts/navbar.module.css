@@ -1,0 +1,28 @@
+.layoutsupir {
+    display: flex;
+    gap: 10pt;
+    padding: 10pt 30pt;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;     
+    z-index: 500;  
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+}
+
+
+.btnsupir{
+    width: max-content;
+}
+
+.right{
+    display: flex;
+    align-items: center;
+    gap: 20pt;
+}
+
+.cari{
+    width: 40%;
+}

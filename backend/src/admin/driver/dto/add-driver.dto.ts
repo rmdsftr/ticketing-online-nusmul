@@ -10,6 +10,6 @@ export class AddDriverDto{
     phone_number:string;
 
     @IsString()
-    @IsIn(["aktif", "cuti", "berhenti"])
-    driver_status:'aktif' | 'cuti' | 'berhenti';
+    @IsIn(["aktif", "cuti", "nonaktif"])
+    driver_status:'aktif' | 'cuti' | 'nonaktif';
 }

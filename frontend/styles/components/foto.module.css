@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  font-family: var(--poppins);
+}
+
+.label {
+  font-size: 9pt;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Upload Container Variants */
+.uploadContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  transition: all 0.2s ease;
+  padding: 10pt 5pt;
+  cursor: pointer;
+  position: relative;
+  min-height: 80px;
+}
+
+.outline {
+  border: 1px solid #232323;
+  background-color: transparent;
+}
+
+.solid {
+  background-color: #f3f4f6;
+  border: 2px dashed #d1d5db;
+}
+
+.ghost {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px dashed #ccc;
+  border-radius: 0;
+}
+
+/* Colors */
+.primary:hover,
+.primary.dragOver {
+  border-color: #DA7629;
+  background-color: rgba(218, 118, 41, 0.05);
+}
+
+.danger:hover,
+.danger.dragOver {
+  border-color: #dc2626;
+  background-color: rgba(220, 38, 38, 0.05);
+}
+
+.gray:hover,
+.gray.dragOver {
+  border-color: #9ca3af;
+  background-color: rgba(156, 163, 175, 0.05);
+}
+
+/* Upload Content */
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.uploadText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dragText {
+  font-size: 9pt;
+  color: #666;
+  margin: 0;
+  font-family: 'Poppins';
+}
+
+.browseText {
+  font-size: 9pt;
+  color: #DA7629;
+  font-weight: 500;
+  text-decoration: underline;
+  font-family: 'Poppins';
+}
+
+/* Icons */
+.iconLeft {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.iconRight {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* Hidden Input */
+.hiddenInput {
+  display: none;
+}
+
+/* File Preview */
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8pt 10pt;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: 'Poppins';
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.fileName {
+  font-size: 9pt;
+  color: #333;
+  font-weight: 500;
+}
+
+.fileSize {
+  font-size: 8pt;
+  color: #666;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 12pt;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-family: 'Poppins';
+}
+
+.removeButton:hover {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+}
+
+/* Error States */
+.error {
+  border-color: #dc2626 !important;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 12px;
+  font-family: 'Poppins';
+}
+
+/* Drag Over Animation */
+.dragOver {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .uploadContainer {
+    padding: 15pt 10pt;
+    min-height: 60px;
+  }
+  
+  .dragText {
+    font-size: 8pt;
+  }
+  
+  .browseText {
+    font-size: 8pt;
+  }
+  
+  .fileName {
+    font-size: 8pt;
+  }
+  
+  .fileSize {
+    font-size: 7pt;
+  }
+}

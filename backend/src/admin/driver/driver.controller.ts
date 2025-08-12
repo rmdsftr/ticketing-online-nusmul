@@ -1,4 +1,4 @@
-import { Body, Controller,  Delete,  FileTypeValidator,  MaxFileSizeValidator,  Param,  ParseFilePipe,  Patch,  Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller,  Delete,  FileTypeValidator,  Get,  MaxFileSizeValidator,  Param,  ParseFilePipe,  Patch,  Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { DriverService } from "./driver.service";
 import { AddDriverDto } from "./dto/add-driver.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -9,6 +9,11 @@ export class DriverController{
     constructor(
         private readonly driverService: DriverService
     ){}
+
+    @Get()
+    async getDriver(){
+        return await this.driverService.getDriver();
+    }
 
     @Post('add')
     @UseInterceptors(FileInterceptor('photo'))

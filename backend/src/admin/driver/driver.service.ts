@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { PrismaService } from "../../prisma/prisma.service";
 import { AddDriverDto } from "./dto/add-driver.dto";
 import {v4 as uuidv4} from "uuid";
@@ -14,6 +14,31 @@ export class DriverService{
         private readonly prisma: PrismaService
     ){}
 
+    async getDriver(){
+        try {
+            const all = await this.prisma.drivers.findMany({
+                select: {
+                    driver_id: true,
+                    fullname:true,
+                    phone_number:true,
+                    driver_status:true,
+                    average_ratings:true,
+                    total_reviews:true
+                }
+            });
+            if(!all){
+                return null;
+            }
+
+            return all;
+        } catch (error) {
+            if(!(error instanceof Error)){
+                throw new InternalServerErrorException("Terjadi kesalahan pada server")
+            }
+            throw error;
+        }
+    }
+
     async addDriver(dto:AddDriverDto, photo?: Express.Multer.File){
         try {
             const cek = await this.prisma.drivers.findFirst({
@@ -23,7 +48,7 @@ export class DriverService{
             })
 
             if(cek){
-                return failed("Supir sudah ditambahkan")
+                throw new BadRequestException("Supir sudah pernah ditambahkan");
             }
 
             const id = uuidv4();
@@ -31,7 +56,7 @@ export class DriverService{
 
             if(photo){
                 if(photo.size > 10_000_000){
-                    return failed("Ukuran foto terlalu besar (max 10 mb)")
+                    throw new BadRequestException("Ukuran foto terlalu besar (max 10 mb");
                 }
 
                 if(!['image/jpeg', 'image/png', 'image/jpg'].includes(photo.mimetype)){
@@ -49,7 +74,7 @@ export class DriverService{
                             upsert: false
                         })
                 } catch (error) {
-                    return failed("Gagal mengupload foto", error)
+                    throw new BadRequestException("Ukuran foto terlalu besar (max 10 mb")
                 }
 
                 const { data } = supabase.storage.from('nusmul').getPublicUrl(fileName)
@@ -68,7 +93,10 @@ export class DriverService{
 
             return success("Berhasil menambahkan supir baru", newDriver);
         } catch (error) {
-            return failed("Terjadi kesalahan pada server", error);
+            if(!(error instanceof Error)){
+                throw new InternalServerErrorException("Terjadi kesalahan pada server")
+            }
+            throw error;
         }
     }
 
@@ -81,10 +109,10 @@ export class DriverService{
             })
 
             if(!cek){
-                return failed("Supir tidak ditemukan")
+                throw new BadRequestException("Supir tidak ditemukan");
             }
 
-            const changed = await this.prisma.drivers.update({
+            const all = await this.prisma.drivers.update({
                 where: {driver_id: driver_id},
                 data: {
                     fullname: dto.fullname ? toTitleCase(dto.fullname):cek.fullname,
@@ -94,10 +122,12 @@ export class DriverService{
                 }
             })
 
-            return success("Berhasil mengupdate data supir", changed)
+            return all;
         } catch (error) {
-            console.error(error);
-            return failed("Gagal mengubah data supir" , error);
+            if(!(error instanceof Error)){
+                throw new InternalServerErrorException("Terjadi kesalahan pada server")
+            }
+            throw error;
         }
     }
 
@@ -177,7 +207,7 @@ export class DriverService{
             })
 
             if(!cek){
-                return failed("Data supir tidak ditemukan")
+                throw new BadRequestException("Data supir tidak ditemukan")
             }
 
             await this.prisma.drivers.delete({
@@ -186,8 +216,10 @@ export class DriverService{
 
             return success("Berhasil menghapus data supir")
         } catch (error) {
-            console.error("Kesalahan saat menghapus data supir : ", error);
-            return failed("Kesalahan saat menghapus data supir", error);
+            if(!(error instanceof Error)){
+                throw new InternalServerErrorException("Terjadi kesalahan pada server")
+            }
+            throw error;
         }
     }
 }
